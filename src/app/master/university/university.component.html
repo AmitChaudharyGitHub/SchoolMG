@@ -1,0 +1,193 @@
+<div class="card">
+  <div class="card-header">
+    <strong>University</strong>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="col-sm-4 float-right">
+          <input type="text" [(ngModel)]="SearchText" (ngModelChange)="modelChangeFn($event)" name="txt" value=""
+            autocomplete="off" placeholder="Search" class="form-control" />
+        </div>
+        <div class="col-md-1 mb-2">
+          <input type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" name="btn" value="Create"
+            class="btn btn-block btn-ghost-info" />
+        </div>
+      </div>
+
+      <div class="col-md-12">
+
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>University</th>
+              <th>Short Name</th>
+              <th>Address</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- {{DataList | json}} -->
+            <tr *ngFor="let A of DataList | paginate: { itemsPerPage: 5, currentPage: p }; let i=index">
+              <td>{{i+1}}</td>
+              <td>{{A.universityName}}</td>
+              <td>{{A.univerityShortName}}</td>
+              <td>{{A.address}}</td>
+              <td> <span *ngIf="A.isActive === true" class="badge badge-success">Active</span>
+                <span *ngIf="A.isActive === false" class="badge badge-danger">Inactive </span>
+              </td>
+              <td>
+                <a class="btn btn-ghost-warning" (click)="Edit(A.id)" data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"><i class="fa fa-pencil-square-o"></i></a>
+                <a class="btn btn-ghost-danger" (click)="Delete(A.id)"><i class="fa fa-trash"></i></a>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+        <div class="col-md-12">
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+
+  <!-- <div class="card-footer">
+    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Submit</button>
+    <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
+  </div> -->
+
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-info">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">University</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <div class="row">
+            <div class="col-md-4 text-bold">University Name</div>
+            <div class="col-md-8 mb-2">
+              <input type="text" name="txt" value="" autocomplete="off" placeholder="University"
+                [(ngModel)]="univer.universityName" class="form-control" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4 text-bold">Short Name</div>
+            <div class="col-md-8 mb-2">
+              <input type="text" name="txt" autocomplete="off" placeholder="Short Name"
+                [(ngModel)]="univer.univerityShortName" class="form-control" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4 text-bold">Address</div>
+            <div class="col-md-8 mb-2">
+              <textarea class="form-control" autocomplete="off" placeholder="Address" [(ngModel)]="univer.address"
+                id="Textarea" rows="3"></textarea>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col-md-4 text-bold">Active</div>
+            <div class="col-md-8">
+              <!-- <input type="checkbox" name="chk"  value="" id="chkAddStatus" class="chk" />               -->
+              <label class="switch switch-label switch-pill switch-primary">
+                <input type="checkbox" class="switch-input" [(ngModel)]="univer.isActive" checked>
+                <span class="switch-slider" data-checked="&#x2713;" data-unchecked="&#x2715;"></span>
+              </label>
+            </div>
+          </div>
+
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" *ngIf="edit === false" (click)="add()" class="btn btn-outline-success">Save</button>
+          <button type="button" *ngIf="edit === true" (click)="update()" class="btn btn-outline-success">Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>
+
+
+
+
+
+<!-- <p>university works!</p> -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-info">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">University</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-md-4 text-bold">University Name</div>
+          <div class="col-md-8 mb-2">
+            <input type="text" name="txt" value="" placeholder="University" [(ngModel)]="univer.universityName"
+              class="form-control" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 text-bold">Short Name</div>
+          <div class="col-md-8 mb-2">
+            <input type="text" name="txt" placeholder="Short Name" [(ngModel)]="univer.univerityShortName"
+              class="form-control" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 text-bold">Address</div>
+          <div class="col-md-8 mb-2">
+            <textarea class="form-control" placeholder="Address" [(ngModel)]="univer.address" id="Textarea"
+              rows="3"></textarea>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-md-4 text-bold">Active</div>
+          <div class="col-md-8">
+            <!-- <input type="checkbox" name="chk"  value="" id="chkAddStatus" class="chk" />               -->
+            <label class="switch switch-label switch-pill switch-primary">
+              <input type="checkbox" class="switch-input" [(ngModel)]="univer.isActive" checked>
+              <span class="switch-slider" data-checked="&#x2713;" data-unchecked="&#x2715;"></span>
+            </label>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" *ngIf="edit === false" (click)="add()" class="btn btn-outline-success">Save</button>
+        <button type="button" *ngIf="edit === true" (click)="update()" class="btn btn-outline-success">Update</button>
+      </div>
+
+    </div>
+  </div>
+</div>
