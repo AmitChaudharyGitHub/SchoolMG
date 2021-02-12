@@ -27,6 +27,8 @@ export class UniversityComponent implements OnInit {
   collection: any[];
   edit = false;
   SearchText = '';
+  ascending = false;
+
   constructor(private router: Router, private Myser: MyserviceService, private toastr: ToastrService) {
     this.univer = new University();
     //this.SearchText='';

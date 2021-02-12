@@ -21,7 +21,10 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>University</th>
+              <th>University
+                <i class="fa fa-sort-alpha-asc" style="cursor: pointer;"  *ngIf="ascending === true" aria-hidden="true"></i>
+                    <i class="fa fa-sort-alpha-desc" style="cursor: pointer;"  *ngIf="ascending !== true" aria-hidden="true"></i>
+              </th>
               <th>Short Name</th>
               <th>Address</th>
               <th>Status</th>
